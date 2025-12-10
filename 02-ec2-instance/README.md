@@ -1,10 +1,11 @@
 ## This is an example of how to run a EC2 Instance on AWS.
 
-This example demonstrates the basic Terraform workflow to start a AWS EC2 Instance using the HashiCorp AWS provider.
+This example demonstrates the basic Terraform workflow for launching an AWS EC2 instance using the HashiCorp AWS provider.
 
-It is important to setup a the right AWS Region and confirm to correct AWS AMI ID's since every AMI ID is unique for the region you deploy resources in. You can check out the AMI Catalog for eu-central-1 here:
-https://eu-central-1.console.aws.amazon.com/ec2/home?region=eu-central-1#AMICatalog:
-terra
+Make sure to configure the correct AWS region and verify the appropriate AMI ID, as each AMI ID is unique to its region. You can explore the AMI catalog for eu-central-1 (Frankfurt) here:
+https://eu-central-1.console.aws.amazon.com/ec2/home?region=eu-central-1#AMICatalog
+
+To get started, initialize the project by running:
 
 To beginn, initialize the project by running `terraform init`.
 
