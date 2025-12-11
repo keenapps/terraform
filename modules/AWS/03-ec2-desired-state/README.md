@@ -87,17 +87,38 @@ Change the instance_type = "t2.micro" to instance_type = "t2.small"
 
 6. **Apply new plan**
 
-Execute terraform plan and the note of the expected output:
+Execute terraform plan and notice the expected output:
 
+>Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following        
+>symbols:
+>  ~ update in-place
+>
+>Terraform will perform the following actions:
+>
+>  # aws_instance.test_server will be updated in-place
+>  ~ resource "aws_instance" "test_server" {
+>        id                                   = "i-0ea1025df3398c82f"
+>      ~ instance_type                        = "t2.micro" -> "t2.small"
+>  ...
+>
+>Plan: 0 to add, 2 to change, 0 to destroy.
+>
 
-5. **Clean up resources**
+As you can see terraform is planning to do an update in-place.
+If you want to confirm go on and execute `terraform apply`
+
+7. **Verify deployment**
+
+Confirm that both instances are deployed and are scaled up correctly
+
+8. **Clean up resources**
 
     ```bash
     terraform destroy
     ```
 Destroys all resources created by this configuration to avoid ongoing costs.
 
-6. **Proof of Concept**
+9. **Proof of Concept**
 The screenshots below confirm successful deployment of two EC2 instances before and after the changing the desired state:
 ![2 instances deployed](./img/desired_state1.png)
 ![2 instances tagged](./img/desired_state2.png)
