@@ -42,5 +42,6 @@ Destroys all resources created by this configuration to avoid ongoing costs.
 
 9. **Proof of Concept**
 The screenshots below confirm the successful deployment and modification of two EC2 instances across regions:
+
 ![instance deployed in frankfurt](./img/server1.png)
 ![instance deployed in stockholm](./img/server2.png)
