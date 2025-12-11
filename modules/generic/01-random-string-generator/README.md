@@ -64,5 +64,6 @@ If you modify any configuration values, you can rerun the plan and apply command
 >
 >Plan: 1 to add, 0 to change, 1 to destroy.
 >
+If you wish you can go on and use terraform apply to change the string.
 
-Finally, you can verify what will be destroyed with: `terraform plan -destroy` And remove the environment entirely using: `terraform destroy`.
+Once you are finished, you can verify what will be destroyed with: `terraform plan -destroy` And remove the environment entirely using: `terraform destroy`.
