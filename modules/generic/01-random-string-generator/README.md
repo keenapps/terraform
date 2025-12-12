@@ -22,7 +22,7 @@ This confirms that Terraform is properly initialized and has downloaded all requ
 Next, create a plan to preview the infrastructure changes with: `terraform plan`.
 
 Expected output:
->  # random_string.random will be created
+>   random_string.random will be created
 >  + resource "random_string" "random" {
 >      + id          = (known after apply)
 >      + length      = 16
@@ -54,7 +54,7 @@ If you modify any configuration values, you can rerun the plan and apply command
 
 >Terraform will perform the following actions:
 >
->  # random_string.random must be replaced
+>  random_string.random must be replaced
 >-/+ resource "random_string" "random" {
 >      ~ id          = "-y:]U2[S!3zz}s(u" -> (known after apply)
 >      ~ length      = 16 -> 20 # forces replacement
@@ -65,5 +65,6 @@ If you modify any configuration values, you can rerun the plan and apply command
 >Plan: 1 to add, 0 to change, 1 to destroy.
 >
 If you wish you can go on and use terraform apply to change the string.
+
 
 Once you are finished, you can verify what will be destroyed with: `terraform plan -destroy` And remove the environment entirely using: `terraform destroy`.
