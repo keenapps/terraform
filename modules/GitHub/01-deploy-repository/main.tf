@@ -14,12 +14,12 @@ terraform {
 # Configure the GitHub Provider
 # ----------------------------
 provider "github" {
-  owner = "keenapps"
+  owner = "keenapps" #Your profile
 }
 
-resource "github_repository" "terraform-repo" {
-  name        = "terraform-deployed"
-  description = "repository deployed with terraform"
-  auto_init   = true
-  visibility = "private"
+resource "github_repository" "terraform_repo" {
+  name        = "terraform-deployed"                 # Repository name
+  description = "Repository deployed with Terraform" # Repository description
+  auto_init   = true                                 # Initialize with first commit (README + default branch)
+  visibility  = "private"                            # Repository visibility
 }
