@@ -14,6 +14,12 @@ terraform {
 # Configure the GitHub Provider
 # ----------------------------
 provider "github" {
-  owner = "somebody"
+  owner = "keenapps"
 }
 
+resource "github_repository" "terraform-repo" {
+  name        = "terraform-deployed"
+  description = "repository deployed with terraform"
+  auto_init   = true
+  visibility = "private"
+}
