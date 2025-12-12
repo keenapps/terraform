@@ -47,13 +47,6 @@ Navigate to EC2 → Instances
 
 Confirm that both instances are deployed and tagged correctly
 
-5. **Clean up resources**
-
-    ```bash
-    terraform destroy
-    ```
-Destroys all resources created by this configuration to avoid ongoing costs.
-
 Tagging Example
 Each EC2 instance includes descriptive tags for easy filtering and cost allocation:
 
@@ -72,7 +65,22 @@ Each EC2 instance includes descriptive tags for easy filtering and cost allocati
 ```
 Using consistent tags is a best practice for managing cloud resources at scale.
 
+5. **Clean up resources**
+
+    ```bash
+    terraform destroy
+    ```
+Destroys all resources created by this configuration to avoid ongoing costs.
+
+If you are confident about what you are doing you can speed things up with
+
+    ```bash
+    terraform destroy -auto-approve
+    ```
+⚠️ Always verify that all resources have been properly destroyed or terminated to avoid unnecessary costs.
+
 6. **Proof of Concept**
 The screenshot below confirms successful deployment of two tagged EC2 instances visible in the AWS EC2 Dashboard:
 ![2 instances deployed](./img/2xEC2-tagged.png)
+
 ![2 instances tagged](./img/2xEC2-tagged2.png)
