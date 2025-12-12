@@ -55,7 +55,7 @@ More explicit intent: The code makes it obvious that “EIP exists” and “EIP
 
 In the Terraform CLI
 
-- Confirm the output of elasic_ip = eg. "123.123.123.123"
+- Confirm the output of elastic_ip = eg. "123.123.123.123"
 
 In the AWS Console (Region us-east-1):
 
@@ -67,5 +67,6 @@ In the AWS Console (Region us-east-1):
 The screenshots below confirm the successful deployment.
 
 ![Security Group deployed](./img/eip1.png)
+
 
 ![Security Group deployed](./img/eip2.png)
