@@ -7,7 +7,6 @@ The purpose of this module is to understand how Terraform stores and manages sta
 ## Overview
 
 - Shows how to initialize Terraform with a custom backend
-- Verifies backend configuration using a simple random string resource
 - Useful for testing state file locations (e.g., local, s3, azurerm, gcs)
 
 >💡 This example is purely for learning and testing.
@@ -37,3 +36,4 @@ terraform init -migrate-state
 - Always back up your state file before changing backends.
 
 You can easily replace the backend block with s3, azurerm, or gcs to test remote state storage.
+
