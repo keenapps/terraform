@@ -14,7 +14,7 @@ terraform {
 # Configure the GitHub Provider
 # ----------------------------
 provider "github" {
-  owner = "keenapps" #Your profile
+  owner = "mygithub" #Your profile
 }
 
 resource "github_repository" "terraform_repo" {

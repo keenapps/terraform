@@ -67,18 +67,20 @@ Note: Environment variables are temporary unless added to your shell profile.
 
 ## Basic Usage
 
-1. Initialize Terraform:
+1. Enter your GitHub Username in the Providerblbock
+
+2. Initialize Terraform:
 ```bash
 terraform init
 ```
 
-2. Plan and apply:
+3. Plan and apply:
 ```bash
 terraform plan
 terraform apply
 ```
 
-3. Destroy when finished:
+4. Destroy when finished:
 ```bash
 terraform destroy
 ```
