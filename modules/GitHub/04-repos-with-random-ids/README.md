@@ -68,7 +68,9 @@ Destroys all resources created by this configuration
 The screenshot below shows the repository successfully created with Terraform and the generated files:
 
 ![GitHub Repo created](./img/proof1.png)
+
 ![GitHub Repo created](./img/proof2.png)
+
 ![GitHub Repo created](./img/proof3.png)
 
 7. **Notes**
@@ -77,4 +79,5 @@ The screenshot below shows the repository successfully created with Terraform an
 - For production or team environments, consider:
   - Using a remote backend (e.g., GitHub, S3, or Terraform Cloud)
   - Implementing variable management for repository names and tokens
+
   - Adding outputs to display repository names and generated IDs after deployment
