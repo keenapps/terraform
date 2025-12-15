@@ -6,20 +6,18 @@ In this case, we generate 3 random IDs (count = 3) with a size of 8 bytes (byte_
 
 ## Basic Usage
 
-1. Enter your GitHub Username in the Providerblbock
-
-2. Initialize Terraform:
+1. Initialize Terraform:
 ```bash
 terraform init
 ```
 
-3. Plan and apply:
+2. Plan and apply:
 ```bash
 terraform plan
 terraform apply
 ```
 
-4. Verify Result
+3. Verify Result
 Example Output in Terraform CLI:
 ```bash
 Outputs:
@@ -31,7 +29,7 @@ random_ids_hex = [
 ]
 ```
 
-5. Destroy when finished:
+4. Destroy when finished:
 ```bash
 terraform destroy
 ```
