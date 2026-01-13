@@ -69,4 +69,4 @@ Now (Multiple VMs):
 Proof of Concept
 Verify two VMs, NICs, and network resources deployed successfully. 
 1 VM example in Screenshot!
-[instance deployed](./img/terraform1.png)
+![instance deployed](./img/terraform1.png)
