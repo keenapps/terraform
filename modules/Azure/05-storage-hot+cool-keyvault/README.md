@@ -62,5 +62,5 @@ RGs	       | 1 (VM)	            | 2 (VM + Storage separation)
 Proof of Concept
 2 VMs + storage deployed. VM screenshot example:
 Storage blob verified:
-[2x resourcegroups](./img/storage1.png)
-[storage deployed](./img/storage2.png)
+![2x resourcegroups](./img/storage1.png)
+![storage deployed](./img/storage2.png)
