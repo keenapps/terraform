@@ -25,7 +25,7 @@ resource "azurerm_key_vault" "terraform-key-vault" {
 
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id  # Dein User/SP
+    object_id = data.azurerm_client_config.current.object_id  # User/SP
 
     secret_permissions = ["Get", "List", "Set", "Delete"]
   }
@@ -44,13 +44,13 @@ data "azurerm_client_config" "current" {}
 resource "azurerm_key_vault_secret" "ssh_private_key" {
   name         = "ssh-private-key"
   value        = tls_private_key.ssh_key.private_key_pem
-  key_vault_id = azurerm_key_vault.terraform-key-vault.id  # Korrigierter Name
+  key_vault_id = azurerm_key_vault.terraform-key-vault.id
   depends_on   = [tls_private_key.ssh_key, azurerm_key_vault.terraform-key-vault]
 }
 
 resource "azurerm_key_vault_secret" "ssh_public_key" {
   name         = "ssh-public-key"
   value        = tls_private_key.ssh_key.public_key_openssh
-  key_vault_id = azurerm_key_vault.terraform-key-vault.id  # Korrigierter Name
+  key_vault_id = azurerm_key_vault.terraform-key-vault.id
   depends_on   = [tls_private_key.ssh_key, azurerm_key_vault.terraform-key-vault]
 }
