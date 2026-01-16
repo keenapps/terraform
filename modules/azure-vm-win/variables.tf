@@ -2,7 +2,10 @@
 variable "name" { type = string }
 variable "resource_group_name" { type = string }
 variable "location" { type = string }
-variable "size" { type = string default = "Standard_D2s_v3" }
+variable "size" {
+   type = string 
+   default = "Standard_D2s_v3"
+}
 
 # Auth
 variable "admin_username" { type = string }

@@ -14,4 +14,7 @@ variable "ddos_protection_mode" {
   default = "Disabled"  # Basic/Standard
 }
 
-variable "tags" { type = map(string) default = {} }
+variable "tags" {
+   type = map(string) 
+   default = {} 
+}
