@@ -16,16 +16,16 @@ resource "local_file" "private_key" {
 }
 
 resource "azurerm_key_vault" "terraform-key-vault" {
-  name                        = "tf-key-vault-${random_id.random[0].hex}"  # Global unique
-  location                    = azurerm_resource_group.terraform_res_VM.location
-  resource_group_name         = azurerm_resource_group.terraform_res_VM.name
-  tenant_id                   = data.azurerm_client_config.current.tenant_id
-  sku_name                    = "standard"
-  purge_protection_enabled    = false
+  name                     = "tf-key-vault-${random_id.random[0].hex}" # Global unique
+  location                 = azurerm_resource_group.terraform_res_VM.location
+  resource_group_name      = azurerm_resource_group.terraform_res_VM.name
+  tenant_id                = data.azurerm_client_config.current.tenant_id
+  sku_name                 = "standard"
+  purge_protection_enabled = false
 
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id  # User/SP
+    object_id = data.azurerm_client_config.current.object_id # User/SP
 
     secret_permissions = ["Get", "List", "Set", "Delete"]
   }

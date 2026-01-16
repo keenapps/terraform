@@ -4,8 +4,5 @@ resource "azurerm_virtual_network" "this" {
   resource_group_name = var.resource_group_name
   address_space       = var.address_space
   dns_servers         = var.dns_servers
-  
-  ddos_protection_mode = var.ddos_protection_mode
-  
-  tags = var.tags
+  tags                = var.tags
 }

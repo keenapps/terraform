@@ -32,10 +32,10 @@ resource "azurerm_linux_virtual_machine" "example" {
     version   = "latest"           # Latest available image version at apply time (can change over time)
   }
 
-    identity {
-    type = "SystemAssigned"  # Enables managed identity
+  identity {
+    type = "SystemAssigned" # Enables managed identity
   }
-  
+
 }
 
 # ----------------------------
@@ -80,16 +80,16 @@ resource "azurerm_public_ip" "terraform-ip" {
 # Adding Storage to VMs
 # ----------------------------
 resource "azurerm_virtual_machine_extension" "blob_access" {
-  count                = 2
-  name                 = "blob-client"
-  virtual_machine_id   = azurerm_linux_virtual_machine.example[count.index].id
-  publisher            = "Microsoft.Azure.Extensions"
-  type                 = "CustomScript"
-  type_handler_version = "2.1"
+  count                      = 2
+  name                       = "blob-client"
+  virtual_machine_id         = azurerm_linux_virtual_machine.example[count.index].id
+  publisher                  = "Microsoft.Azure.Extensions"
+  type                       = "CustomScript"
+  type_handler_version       = "2.1"
   auto_upgrade_minor_version = true
 
-settings = jsonencode({
-  commandToExecute = <<-SCRIPT
+  settings = jsonencode({
+    commandToExecute = <<-SCRIPT
     #!/bin/bash
     apt-get update && apt-get install -y azure-cli
     az login --identity
@@ -102,5 +102,5 @@ settings = jsonencode({
     echo "Downloaded blob to /tmp/vm-data.zip"
     exit 0
   SCRIPT
-})
+  })
 }

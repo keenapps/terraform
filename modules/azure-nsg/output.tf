@@ -9,10 +9,9 @@ output "name" {
 }
 
 output "rules" {
-  description = "All applied security rules"
   value = {
-    for k, rule in azurerm_network_security_group.this.security_rule :
-    k => {
+    for rule in azurerm_network_security_group.this.security_rule :
+    rule.name => {
       access                     = rule.access
       source_port_range          = rule.source_port_range
       destination_port_range     = rule.destination_port_range
@@ -21,7 +20,7 @@ output "rules" {
       protocol                   = rule.protocol
       direction                  = rule.direction
       priority                   = rule.priority
-      description                = rule.description
+      description                = try(rule.description, null)
     }
   }
 }

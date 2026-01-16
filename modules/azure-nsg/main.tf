@@ -2,9 +2,9 @@ resource "azurerm_network_security_group" "this" {
   name                = var.name
   location            = var.location
   resource_group_name = var.resource_group_name
-  
+
   dynamic "security_rule" {
-    for_each = var.rules  # var.rules list/map
+    for_each = var.rules # var.rules list/map
     content {
       name                       = security_rule.value.name
       priority                   = security_rule.value.priority
@@ -18,6 +18,6 @@ resource "azurerm_network_security_group" "this" {
       description                = security_rule.value.description
     }
   }
-  
+
   tags = var.tags
 }

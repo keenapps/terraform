@@ -8,7 +8,7 @@ provider "azurerm" {
   tenant_id       = "YOUR TENANT ID"       # Azure Active Directory (Entra ID) Tenant ID used for authentication context
 
   resource_provider_registrations = "none" # Disables automatic registration of Azure Resource Providers
-                                           # (useful in restricted environments; you must pre-register providers manually)
+  # (useful in restricted environments; you must pre-register providers manually)
 }
 
 resource "tls_private_key" "tls" {

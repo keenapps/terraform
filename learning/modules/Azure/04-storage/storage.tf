@@ -20,7 +20,7 @@ resource "azurerm_storage_account" "tfstorage1" {
 
 resource "azurerm_storage_container" "terraformstorage1_container" {
   name                  = "terraform-container"
-  storage_account_name    = azurerm_storage_account.tfstorage1.name
+  storage_account_name  = azurerm_storage_account.tfstorage1.name
   container_access_type = "private"
 }
 

@@ -11,8 +11,8 @@ variable "special" {
 
 variable "override_special" {
   description = "Allowed special chars"
-  type        = list(string)
-  default     = ["!#$%&*()-_=+[]{}<>:?"]
+  type        = string
+  default     = "!@#$%^&*()_+-=[]{}|;:,.<>?"
 }
 
 variable "min_lower" {

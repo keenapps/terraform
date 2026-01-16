@@ -3,14 +3,20 @@ variable "name" { type = string }
 variable "resource_group_name" { type = string }
 variable "location" { type = string }
 variable "size" {
-   type = string 
-   default = "Standard_D2s_v3"
+  type    = string
+  default = "Standard_D2s_v3"
 }
 
 # Auth
 variable "admin_username" { type = string }
-variable "admin_password" { type = string sensitive = true }
-variable "disable_password_auth" { type = bool default = false }
+variable "admin_password" {
+  type      = string
+  sensitive = true
+}
+variable "disable_password_auth" {
+  type    = bool
+  default = false
+}
 
 # Multi/Single
 variable "instances" {
@@ -38,25 +44,64 @@ variable "single_network_interface_ids" {
   default     = []
 }
 
-variable "computer_name_prefix" { type = string default = null }
+variable "computer_name_prefix" {
+  type    = string
+  default = null
+}
 
 # Identity/Patch
-variable "managed_identity_type" { type = string default = "SystemAssigned" }
-variable "patch_mode" { type = string default = "AutomaticByPlatform" }
+variable "managed_identity_type" {
+  type    = string
+  default = "SystemAssigned"
+}
+variable "patch_mode" {
+  type    = string
+  default = "AutomaticByPlatform"
+}
 
 # OS Disk
-variable "os_disk_caching" { type = string default = "ReadWrite" }
-variable "os_disk_type" { type = string default = "Standard_LRS" }
-variable "os_disk_size_gb" { type = number default = 127 }
+variable "os_disk_caching" {
+  type    = string
+  default = "ReadWrite"
+}
+variable "os_disk_type" {
+  type    = string
+  default = "Standard_LRS"
+}
+variable "os_disk_size_gb" {
+  type    = number
+  default = 127
+}
 
 # Image (Windows Server Core)
-variable "image_publisher" { type = string default = "MicrosoftWindowsServer" }
-variable "image_offer" { type = string default = "WindowsServer" }
-variable "image_sku" { type = string default = "2022-datacenter-azure-edition-core" }
-variable "image_version" { type = string default = "latest" }
+variable "image_publisher" {
+  type    = string
+  default = "MicrosoftWindowsServer"
+}
+variable "image_offer" {
+  type    = string
+  default = "WindowsServer"
+}
+variable "image_sku" {
+  type    = string
+  default = "2022-datacenter-azure-edition-core"
+}
+variable "image_version" {
+  type    = string
+  default = "latest"
+}
 
 # Boot Diagnostics
-variable "boot_diagnostics_enabled" { type = bool default = true }
-variable "boot_diagnostics_storage_uri" { type = string default = null }
+variable "boot_diagnostics_enabled" {
+  type    = bool
+  default = true
+}
+variable "boot_diagnostics_storage_uri" {
+  type    = string
+  default = null
+}
 
-variable "tags" { type = map(string) default = {} }
+variable "tags" {
+  type    = map(string)
+  default = {}
+}

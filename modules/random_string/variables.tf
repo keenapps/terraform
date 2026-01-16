@@ -30,6 +30,11 @@ variable "numeric" {
 
 variable "override_special" {
   description = "Override special characters"
-  type        = list(string)
-  default     = []
+  type        = string
+  default     = "!@#$%^&*()_+-=[]{}|;:,.<>?"
+}
+
+variable "keepers" {
+  type    = map(string)
+  default = {}
 }

@@ -21,12 +21,12 @@ resource "azurerm_user_assigned_identity" "storage_cmk_identity" {
 # Key Vault - SSH + CMK (Purge Protection, RBAC-ready)
 # ----------------------------
 resource "azurerm_key_vault" "terraform-key-vault" {
-  name                       = "tf-key-vault-${random_id.random[0].hex}"
-  location                   = azurerm_resource_group.terraform_res_VM.location
-  resource_group_name        = azurerm_resource_group.terraform_res_VM.name
-  tenant_id                  = data.azurerm_client_config.current.tenant_id
+  name                = "tf-key-vault-${random_id.random[0].hex}"
+  location            = azurerm_resource_group.terraform_res_VM.location
+  resource_group_name = azurerm_resource_group.terraform_res_VM.name
+  tenant_id           = data.azurerm_client_config.current.tenant_id
 
-  sku_name                   = "standard"
+  sku_name = "standard"
 
   purge_protection_enabled   = true
   soft_delete_retention_days = 90
@@ -44,9 +44,9 @@ resource "azurerm_key_vault" "terraform-key-vault" {
   }
 
   tags = {
-    "Managed by"  = "Terraform"
-    "services"    = "ssh-secrets,storage-cmk"
-    "compliance"  = "purge-protection,rbac"
+    "Managed by" = "Terraform"
+    "services"   = "ssh-secrets,storage-cmk"
+    "compliance" = "purge-protection,rbac"
   }
 }
 
@@ -87,10 +87,10 @@ resource "azurerm_key_vault_secret" "ssh_public_key" {
 # CMK für Storage Encryption
 # ----------------------------
 resource "azurerm_key_vault_key" "storage_cmk" {
-  name      = "storage-encryption-key"
+  name         = "storage-encryption-key"
   key_vault_id = azurerm_key_vault.terraform-key-vault.id
-  key_type  = "RSA"
-  key_size  = 2048
+  key_type     = "RSA"
+  key_size     = 2048
 
   key_opts = [
     "decrypt",

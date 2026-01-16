@@ -5,6 +5,6 @@ output "result" {
 
 output "result_b64" {
   description = "Base64 encoded version"
-  value       = random_string.this.b64_result
+  value       = random_string.this.result
   sensitive   = true
 }

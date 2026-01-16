@@ -26,7 +26,7 @@ resource "azurerm_storage_account" "tfstorage1" {
 
 resource "azurerm_storage_container" "tf-vm-app-data-share" {
   name                  = "terraform-vm-app-data"
-  storage_account_name    = azurerm_storage_account.tfstorage1.name
+  storage_account_name  = azurerm_storage_account.tfstorage1.name
   container_access_type = "private"
 }
 
@@ -36,7 +36,7 @@ resource "azurerm_storage_blob" "vm1_hot" {
   storage_container_name = azurerm_storage_container.tf-vm-app-data-share.name
   type                   = "Block"
   source_content         = "Hot data for VM1 (logs/metrics)"
-  access_tier            = "Hot"  # Explicit (inherits anyway)
+  access_tier            = "Hot" # Explicit (inherits anyway)
 }
 
 resource "azurerm_storage_blob" "vm2_cool" {
@@ -45,5 +45,5 @@ resource "azurerm_storage_blob" "vm2_cool" {
   storage_container_name = azurerm_storage_container.tf-vm-app-data-share.name
   type                   = "Block"
   source_content         = "Cool data for VM2 (backups/archives)"
-  access_tier            = "Cool"  # Per-blob override (cheaper storage)
+  access_tier            = "Cool" # Per-blob override (cheaper storage)
 }

@@ -10,8 +10,8 @@ resource "random_password" "password" {
   # If ANY value in this map changes, Terraform will "replace" this resource
   # and generate a NEW password.
   keepers = {
-    triggers = timestamp()                  # timestamp() changes every plan/apply -> forces password regeneration every run
-                                            # "triggers" is just a custom key name (not a special Terraform keyword)
+    triggers = timestamp() # timestamp() changes every plan/apply -> forces password regeneration every run
+    # "triggers" is just a custom key name (not a special Terraform keyword)
   }
 }
 

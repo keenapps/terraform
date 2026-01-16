@@ -5,7 +5,7 @@
 # random_id.random[0], random_id.random[1], random_id.random[2]
 resource "random_id" "random" {
   byte_length = 8 # Length of the random value in bytes (8 bytes = 64-bit)
-  count       = 3  # Number of random IDs to generate
+  count       = 3 # Number of random IDs to generate
 }
 # ----------------------------
 # Output All Random IDs (Optional)
