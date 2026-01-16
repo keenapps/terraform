@@ -1,20 +1,20 @@
 ﻿# Terraform Multi-Cloud Infrastructure
 
-This repository contains Infrastructure as Code (IaC) examples built with Terraform to provision and manage resources across different Cloud Providers.
-It is a learning and reference project demonstrating how to design modular, reusable, and secure infrastructure automation patterns.
+This repository contains Infrastructure as Code (IaC) examples built with Terraform for AWS, Azure, and more. It serves learning, reusability, and portfolio demos for job applications.
 
 ---
 
 ## Overview
 
-This project shows how to deploy and manage infrastructure in a multi-cloud or provider-agnostic way using Terraform.
-Each module represents a specific service or building block (e.g., VPC, IAM, Storage, CI/CD integration), allowing easy composition and reuse.
+Modular setups demonstrate provider authentication, networking, compute, and CI/CD. Learning modules build sequentially (see READMEs), production modules are generalized and reusable.
 
 >Repository Structure Note
 >
->/modules/... contains individual provider or service modules.
+>/modules/... contains individual reusable provider or service modules.
 >
->Each provider (e.g., AWS, Azure, GitHub, etc.) has its own sub-README with setup and authentication details.
+>/learning/modules/... Each provider (e.g., AWS, Azure, GitHub, etc.) has its own sub-README with setup and authentication details.
+>
+>/project/... Complete demos with deployment guides
 >
 >Some module folders include documentation-only READMEs (architecture notes, explanations).
 >
@@ -26,21 +26,22 @@ Each module represents a specific service or building block (e.g., VPC, IAM, Sto
 
 ## Common Use Cases include:
 
--Setting up foundational networking and compute infrastructure
+- Setting up foundational networking and compute infrastructure
 - Testing provider authentication and configuration methods
 - Managing state, variables, and backends
-- Demonstrating CI/CD workflows for infrastructure deployment
-- Comparing and integrating multiple cloud providers
+- Demonstrating CI/CD workflows
+- Comparing multiple cloud providers
+- Portfolio projects for DevOps interviews
 
 ---
 
 ## Design Principles
 
-- Modularity: Self-contained modules for each provider or component
-- Clarity: Explicit, commented Terraform definitions
-- Security: No hardcoded credentials or secrets
-- Scalability: Multi-environment and multi-provider support (dev, staging, prod)
-- Best Practices: Based on official Terraform & provider-specific guidelines
+- Learning: Sequential builds with explanations
+- Reusable: Modules with variables/outputs
+- Portfolio: Projects combining everything
+- Security: No secrets unless in learning modules, use Managed Identity
+- Best Practices: Official Terraform guidelines
 
 ---
 
@@ -60,24 +61,6 @@ Each module represents a specific service or building block (e.g., VPC, IAM, Sto
 - Access to at least one supported Cloud Provider (AWS, Azure, GCP, etc.)
 - Basic CLI and Git knowledge
 - Provider-specific CLI configured (e.g., aws configure, az login, or gcloud auth login)
-
-### Directory Layout
-
-<code>
-├── modules/
-│ ├── aws/
-│ │ ├── README.md → AWS-specific setup, IAM & profile instructions
-│ │ └── xy-module/*.tf → Terraform code for AWS examples
-│ ├── azure/
-│ │ ├── README.md → Azure CLI login & provider setup
-│ │ └── xy-module/*.tf → Terraform code for Azure examples
-│ ├── github/
-│ │ ├── README.md → GitHub provider usage and PAT handling
-│ │ └── xy-module/*.tf → Terraform code for GitHub examples
-│ ├── generic/
-│ │ ├── README.md → Provider-agnostic helpers (naming, locals, patterns)
-│ │ └── xy-module/*.tf → Reusable Terraform utilities
-</code>
 
 ---
 
@@ -111,7 +94,9 @@ https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs
 Terraform GitHub Provider
 https://registry.terraform.io/providers/integrations/github/latest/docs
 
-## License
+## Learning Project Disclaimer
+This repository is designed for educational purposes. Some examples use simplified configurations. Review IAM policies, networking rules, and state management before production use.
 
+## License
 
 This repository is open-source and available under the MIT License
