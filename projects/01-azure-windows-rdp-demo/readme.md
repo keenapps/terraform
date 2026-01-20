@@ -19,6 +19,7 @@ Production-ready Terraform deployment of a Windows Server 2022 VM with public RD
 
 # Modular Structure (main.tf only)
 
+<code>
 locals.tf: location="Switzerland North", tags
 ├── modules/azure-rg → Resource Group
 ├── modules/azure-vnet → VNet 10.0.0.0/16
@@ -31,6 +32,7 @@ locals.tf: location="Switzerland North", tags
 ├── modules/azure-storage → LRS Storage (logs)
 ├── modules/azure-vm-win → Windows VM (image + creds)
 └── azurerm_monitor_diagnostic_setting → Metrics to Storage
+</code>
 
 # Deployment Flow
 
@@ -72,6 +74,7 @@ mstsc /v:<public_ip>            # Username: .\SecretSanta
 
 # Verify in Azure Portal
 
+<code>
 Resource Group: rg-windows-rdp
 ├── VNet: vnet-windows (10.0.0.0/16)
 ├── Subnet: subnet-windows → NSG assoc ✓
@@ -81,6 +84,7 @@ Resource Group: rg-windows-rdp
 ├── VM: vm-windows-rdp-default-* → Running ✓
 ├── Storage: stXXXXXX → insights-metrics-pt1m ✓
 └── Diagnostics: AllMetrics to Storage ✓
+</code>
 
 # Validation:
 RDP: Connect via Public IP ✓
