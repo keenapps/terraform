@@ -1,8 +1,13 @@
+# Core
 variable "name" { type = string }
 variable "resource_group_name" { type = string }
 variable "location" { type = string }
-variable "size" { type = string default = "Standard_D2s_v3" }
+variable "size" {
+  type    = string
+  default = "Standard_D2s_v3"
+}
 
+# Auth
 variable "admin_username" { type = string }
 variable "admin_password" {
   type      = string
@@ -13,19 +18,87 @@ variable "disable_password_auth" {
   default = false
 }
 
-variable "network_interface_ids" { type = list(string) }
-variable "custom_data" { type = string default = null }
+# Multi/Single
+variable "instances" {
+  description = "Multiple VMs map"
+  type = map(object({
+    network_interface_ids = list(string)
+    size                  = optional(string)
+    image_sku             = optional(string)
+    custom_data           = optional(string)
+    managed_identity_type = optional(string)
+    patch_mode            = optional(string)
+    os_disk_caching       = optional(string)
+    os_disk_type          = optional(string)
+    os_disk_size_gb       = optional(number)
+    image_publisher       = optional(string)
+    image_offer           = optional(string)
+    image_version         = optional(string)
+  }))
+  default = {}
+}
 
-variable "os_disk_caching" { type = string default = "ReadWrite" }
-variable "os_disk_type" { type = string default = "Standard_LRS" }
-variable "os_disk_size_gb" { type = number default = 30 }
+variable "single_network_interface_ids" {
+  description = "NICs for single VM"
+  type        = list(string)
+  default     = []
+}
 
-variable "image_publisher" { type = string default = "Canonical" }
-variable "image_offer" { type = string default = "0001-com-ubuntu-server-noble" }
-variable "image_sku" { type = string default = "22_04-lts" }
-variable "image_version" { type = string default = "latest" }
+variable "computer_name_prefix" {
+  type    = string
+  default = null
+}
 
-variable "boot_diagnostics_enabled" { type = bool default = true }
-variable "boot_diagnostics_storage_uri" { type = string default = null }
+# Identity/Patch
+variable "managed_identity_type" {
+  type    = string
+  default = "SystemAssigned"
+}
+variable "patch_mode" {
+  type    = string
+  default = "AutomaticByPlatform"
+}
 
-variable "tags" { type = map(string) default = {} }
+# OS Disk
+variable "os_disk_caching" {
+  type    = string
+  default = "ReadWrite"
+}
+variable "os_disk_type" {
+  type    = string
+  default = "Standard_LRS"
+}
+variable "os_disk_size_gb" {
+  type    = number
+  default = 127
+}
+
+# Image (Linux Canonical)
+variable "image_publisher" { 
+  type = string default = "Canonical" 
+}
+variable "image_offer" {
+  type = string default = "0001-com-ubuntu-server-noble"
+}
+variable "image_sku" {
+  type = string default = "22_04-lts"
+}
+variable "image_version" {
+  type = string default = "latest"
+}
+
+# Boot Diagnostics
+variable "boot_diagnostics_enabled" {
+  type    = bool
+  default = true
+}
+variable "boot_diagnostics_storage_uri" {
+  type    = string
+  default = null
+}
+
+# Tagging
+variable "tags" {
+  type    = map(string)
+  default = {}
+}

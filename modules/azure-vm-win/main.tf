@@ -20,6 +20,7 @@ resource "azurerm_windows_virtual_machine" "this" {
   resource_group_name = var.resource_group_name
   location            = var.location
   size                = try(each.value.size, var.size)
+  computer_name       = format("vm-%s", module.suffix.result)
 
   admin_username = var.admin_username
   admin_password = var.admin_password

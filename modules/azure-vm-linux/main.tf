@@ -1,40 +1,51 @@
-# Random suffix for uniqueness
-module "vm_suffix" {
+module "suffix" {
   source = "../random_string"
-  length = 8
+  length = 4
+}
+
+locals {
+  single_config = {
+    network_interface_ids = var.single_network_interface_ids
+    size                  = var.size
+  }
 }
 
 resource "azurerm_linux_virtual_machine" "this" {
-  name                = "${var.name}-${module.vm_suffix.result}"
+  for_each = merge(
+    var.instances,
+    length(keys(var.instances)) == 0 ? { "default" = local.single_config } : {}
+  )
+
+  name                = "${var.name}-${each.key}-${module.suffix.result}"
   resource_group_name = var.resource_group_name
   location            = var.location
-  size                = var.size
+  size                = try(each.value.size, var.size)
+  computer_name       = format("vm-%s", module.suffix.result)
 
-  admin_username                  = var.admin_username
-  admin_password                  = var.admin_password
-  disable_password_authentication = var.disable_password_auth
-  custom_data                     = var.custom_data
+  admin_username = var.admin_username
+  admin_password = var.admin_password
 
-  network_interface_ids = var.network_interface_ids
+  network_interface_ids = each.value.network_interface_ids
+  custom_data           = try(each.value.custom_data, null)
+
+  identity {
+    type = try(each.value.managed_identity_type, var.managed_identity_type)
+  }
+
+  patch_mode = try(each.value.patch_mode, var.patch_mode)
 
   os_disk {
-    caching              = var.os_disk_caching
-    storage_account_type = var.os_disk_type
-    disk_size_gb         = var.os_disk_size_gb
+    caching              = try(each.value.os_disk_caching, var.os_disk_caching)
+    storage_account_type = try(each.value.os_disk_type, var.os_disk_type)
+    disk_size_gb         = try(each.value.os_disk_size_gb, var.os_disk_size_gb)
   }
 
   source_image_reference {
-    publisher = var.image_publisher
-    offer     = var.image_offer
-    sku       = var.image_sku
-    version   = var.image_version
+    publisher = try(each.value.image_publisher, var.image_publisher)
+    offer     = try(each.value.image_offer, var.image_offer)
+    sku       = try(each.value.image_sku, var.image_sku)
+    version   = try(each.value.image_version, var.image_version)
   }
 
-  # Optional boot diagnostics
-  boot_diagnostics {
-    enabled     = var.boot_diagnostics_enabled
-    storage_uri = var.boot_diagnostics_storage_uri
-  }
-
-  tags = var.tags
+  tags = merge(var.tags, { VMInstance = each.key })
 }

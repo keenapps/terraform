@@ -4,7 +4,7 @@ resource "azurerm_network_security_group" "this" {
   resource_group_name = var.resource_group_name
 
   dynamic "security_rule" {
-    for_each = var.rules # var.rules list/map
+    for_each = var.rules
     content {
       name                       = security_rule.value.name
       priority                   = security_rule.value.priority

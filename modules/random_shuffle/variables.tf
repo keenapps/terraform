@@ -1,7 +1,6 @@
 variable "input_list" {
   description = "List to shuffle"
   type        = list(string)
-  # No default - required!
 }
 
 variable "result_count" {

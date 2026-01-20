@@ -7,7 +7,7 @@ variable "ip_config_name" {
   default = "internal"
 }
 
-variable "subnet_id" { type = string } # Required
+variable "subnet_id" { type = string }
 
 variable "public_ip_id" {
   description = "Public IP ID (null = no public IP)"
@@ -24,6 +24,12 @@ variable "private_ip_version" {
   type    = string
   default = "IPv4"
 }
+
+variable "private_ip_address" {
+  type        = string
+  default     = null
+}
+
 
 variable "tags" {
   type    = map(string)

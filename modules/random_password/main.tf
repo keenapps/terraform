@@ -8,6 +8,6 @@ resource "random_password" "this" {
   min_special      = var.min_special
 
   keepers = {
-    rotation_trigger = var.rotation_trigger # Custom trigger (e.g., timestamp(), env)
+    rotation_trigger = var.rotation_trigger
   }
 }
