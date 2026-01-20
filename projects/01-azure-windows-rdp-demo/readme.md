@@ -89,10 +89,10 @@ Metrics: Portal > VM > Metrics > CPU live ✓
 
 # Proof of Concept:
 The screenshots below confirm successful deployment of a Windows VM with RDP Access:
-![Terraform Apply](./img/poc1.png)
+![Terraform Apply](./img/poc1.jpg)
 
-![Connection Test](./img/poc4.png)
+![Connection Test](./img/poc4.jpg)
 
-![Resources created](./img/poc2.png)
+![Resources created](./img/poc2.jpg)
 
-![Confirmed RDP Access](./img/poc3.png)
+![Confirmed RDP Access](./img/poc3.jpg)

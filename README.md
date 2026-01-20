@@ -1,6 +1,10 @@
 ﻿# Terraform Multi-Cloud Infrastructure
 
-This repository contains Infrastructure as Code (IaC) examples built with Terraform for AWS, Azure, and more. It serves learning, reusability, and portfolio demos for job applications.
+[![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)](https://www.terraform.io/)
+[![Azure](https://img.shields.io/badge/azure-%230072C6.svg?style=for-the-badge&logo=azure&logoColor=white)](https://azure.microsoft.com/)
+[![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=black)](https://aws.amazon.com/)
+
+This repository contains **Infrastructure as Code (IaC) examples** built with Terraform for **AWS, Azure**, and more. Learning modules, reusable components, and **portfolio demos** for DevOps job applications.
 
 ---
 
