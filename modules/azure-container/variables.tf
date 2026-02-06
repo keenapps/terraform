@@ -26,7 +26,7 @@ variable "container_access_type" {
 variable "default_encryption_scope" {
   description = "Encryption Scope (Customer Managed Key)"
   type        = string
-  default     = "null"
+  default     = null
 }
 
 variable "encryption_scope_override_enabled" {
