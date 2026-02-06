@@ -52,7 +52,7 @@ Modular setups demonstrate provider authentication, networking, compute, and CI/
 ## Technologies & Tools
 
 - **Terraform** (Infrastructure as Code)
-- **Cloud Providers** AWS, Azure, GCP (extendable)
+- **Cloud Providers** AWS, Azure (GCP planned)
 - **GitHub / GitLab** for version control and automation
 - **CLI Tools** (AWS CLI, Azure CLI, gcloud, etc.) for authentication and local testing
 
@@ -61,7 +61,7 @@ Modular setups demonstrate provider authentication, networking, compute, and CI/
 ## Getting Started
 
 ### Prerequisites
-- Terraform v1.0.x or later
+- Terraform v1.10.x or later
 - Access to at least one supported Cloud Provider (AWS, Azure, GCP, etc.)
 - Basic CLI and Git knowledge
 - Provider-specific CLI configured (e.g., aws configure, az login, or gcloud auth login)
