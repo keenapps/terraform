@@ -41,11 +41,11 @@ Modular setups demonstrate provider authentication, networking, compute, and CI/
 
 ## Design Principles
 
-- Learning: Sequential builds with explanations
-- Reusable: Modules with variables/outputs
-- Portfolio: Projects combining everything
-- Security: No secrets unless in learning modules, use Managed Identity
-- Best Practices: Official Terraform guidelines
+- **Modular Architecture:** Strict separation of reusable modules (`/modules`) and deployable solutions (`/projects`).
+- **Zero-Trust Security:** No hardcoded secrets. Use of dynamic credentials, environment variables, and randomized passwords.
+- **State Management:** Demonstration of remote state backends with locking, encryption, and network isolation.
+- **Documentation First:** "How-to-Deploy" guides for every project, simulating production runbooks.
+- **Clean Code:** Adherence to Terraform style conventions (`terraform fmt`) and validation checks.
 
 ---
 
