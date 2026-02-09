@@ -113,6 +113,6 @@ Resource Group: rg-tfstate-demo
 # Proof of Concept:
 
 The screenshots below confirm the secure backend deployment and successful state migration:
-![Terraform backend](./img/poc1.jpg)
+![Terraform backend](./img/poc1.jpeg)
 
-![Terraform state](./img/poc2.jpg)
+![Terraform state](./img/poc2.jpeg)
