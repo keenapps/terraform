@@ -1,5 +1,4 @@
 name: Terraform Deploy - Cloudeteer Launchpad Demo
-
 on:
   workflow_dispatch:
   push:
@@ -42,7 +41,8 @@ jobs:
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUB_ID }}
           ARM_USE_OIDC: true
-          TF_VAR_runner_github_repo: keenapps/terraform/projects/02-azure-cloudeteer-launchpad-demo
+          ARM_USE_CLI: false
+          TF_VAR_runner_github_repo: terraform
           TF_VAR_subscription_id: ${{ secrets.AZURE_SUB_ID }}
           TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
         run: terraform init
@@ -53,7 +53,8 @@ jobs:
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUB_ID }}
           ARM_USE_OIDC: true
-          TF_VAR_runner_github_repo: keenapps/terraform/projects/02-azure-cloudeteer-launchpad-demo
+          ARM_USE_CLI: false
+          TF_VAR_runner_github_repo: terraform
           TF_VAR_subscription_id: ${{ secrets.AZURE_SUB_ID }}
           TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
         run: terraform plan
@@ -65,7 +66,8 @@ jobs:
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUB_ID }}
           ARM_USE_OIDC: true
-          TF_VAR_runner_github_repo: keenapps/terraform/projects/02-azure-cloudeteer-launchpad-demo
+          ARM_USE_CLI: false
+          TF_VAR_runner_github_repo: terraform
           TF_VAR_subscription_id: ${{ secrets.AZURE_SUB_ID }}
           TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
         run: terraform apply -auto-approve
