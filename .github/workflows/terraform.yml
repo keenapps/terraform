@@ -24,6 +24,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install Azure CLI
+        run: |
+          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+      - name: Check az version
+        run: az --version
+
       - name: Terraform Setup
         uses: hashicorp/setup-terraform@v3
         with:
