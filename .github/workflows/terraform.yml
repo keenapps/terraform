@@ -23,12 +23,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Azure CLI
-        run: |
-          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-
-      - name: Check az version
-        run: az --version
+      - name: Azure OIDC Login  # ← FIX: Clean OIDC Auth
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}  # UAMI Client ID als Repo Var (no secret)
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUB_ID }}
 
       - name: Terraform Setup
         uses: hashicorp/setup-terraform@v3
@@ -37,37 +37,13 @@ jobs:
 
       - name: Terraform Init
         working-directory: ./projects/02-azure-cloudeteer-launchpad-demo
-        env:
-          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUB_ID }}
-          ARM_USE_OIDC: true
-          ARM_USE_CLI: false
-          TF_VAR_runner_github_repo: terraform
-          TF_VAR_subscription_id: ${{ secrets.AZURE_SUB_ID }}
-          TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
         run: terraform init
 
       - name: Terraform Plan
         working-directory: ./projects/02-azure-cloudeteer-launchpad-demo
-        env:
-          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUB_ID }}
-          ARM_USE_OIDC: true
-          ARM_USE_CLI: false
-          TF_VAR_runner_github_repo: terraform
-          TF_VAR_subscription_id: ${{ secrets.AZURE_SUB_ID }}
-          TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
         run: terraform plan
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
         working-directory: ./projects/02-azure-cloudeteer-launchpad-demo
-        env:
-          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUB_ID }}
-          ARM_USE_OIDC: true
-          ARM_USE_CLI: false
-          TF_VAR_runner_github_repo: terraform
-          TF_VAR_subscription_id: ${{ secrets.AZURE_SUB_ID }}
-          TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
         run: terraform apply -auto-approve
