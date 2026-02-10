@@ -1,0 +1,37 @@
+name: Terraform Deploy
+on:
+  workflow_dispatch:  # Manuell triggern
+  push:
+    branches: [ main ]
+    paths: ['projects/02-azure-cloudeteer-launchpad-demo/**']
+
+permissions:
+  id-token: write    # OIDC
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: 
+      name: prod-azure  # Matcht Credential
+      url: https://github.com/keenapps/terraform/tree/main/projects/02-azure-cloudeteer-launchpad-demo
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Terraform Setup
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.9.0
+    
+    - name: Terraform Init
+      working-directory: ./projects/02-azure-cloudeteer-launchpad-demo
+      run: terraform init
+    
+    - name: Terraform Plan
+      working-directory: ./projects/02-azure-cloudeteer-launchpad-demo
+      run: terraform plan -var="runner_github_repo=terraform"
+    
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main'  # Nur main
+      working-directory: ./projects/02-azure-cloudeteer-launchpad-demo
+      run: terraform apply -auto-approve -var="runner_github_repo=terraform"
