@@ -17,7 +17,13 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: prod-azure
+    environment: 
+      name: prod-azure
+      url: https://github.com/keenapps/terraform/tree/main/projects/02-azure-cloudeteer-launchpad-demo
+    env:
+      TF_VAR_subscription_id: ${{ secrets.AZURE_SUB_ID }}
+      TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+      TF_VAR_runner_github_repo: terraform
     steps:
     - uses: actions/checkout@v4
     
@@ -28,31 +34,13 @@ jobs:
     
     - name: Terraform Init
       working-directory: ./projects/02-azure-cloudeteer-launchpad-demo
-      env:
-        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUB_ID }}
-        ARM_USE_OIDC: true
-        TF_VAR_runner_github_repo: terraform
-        TF_VAR_subscription_id: ${{ secrets.AZURE_SUB_ID }}
       run: terraform init
     
     - name: Terraform Plan
       working-directory: ./projects/02-azure-cloudeteer-launchpad-demo
-      env:
-        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUB_ID }}
-        ARM_USE_OIDC: true
-        TF_VAR_runner_github_repo: terraform
-        TF_VAR_subscription_id: ${{ secrets.AZURE_SUB_ID }}
       run: terraform plan
     
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main'
       working-directory: ./projects/02-azure-cloudeteer-launchpad-demo
-      env:
-        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUB_ID }}
-        ARM_USE_OIDC: true
-        TF_VAR_runner_github_repo: terraform
-        TF_VAR_subscription_id: ${{ secrets.AZURE_SUB_ID }}
       run: terraform apply -auto-approve
