@@ -44,3 +44,82 @@ resource "azurerm_role_assignment" "subscription_owner" {
   role_definition_name = "Owner"
   scope                = data.azurerm_subscription.current.id
 }
+
+resource "random_string" "this" {
+  length  = 3
+  special = false
+  upper   = false
+}
+
+resource "azurerm_storage_account" "this" {
+  name                = "stlaunchpad${random_string.this.result}"
+  location            = azurerm_resource_group.this.location
+  resource_group_name = azurerm_resource_group.this.name
+
+  account_tier             = "Standard"
+  account_replication_type = "RAGRS"
+
+  allow_nested_items_to_be_public   = false
+  default_to_oauth_authentication   = true
+  infrastructure_encryption_enabled = true
+  public_network_access_enabled     = false
+  shared_access_key_enabled         = false
+
+  blob_properties {
+    versioning_enabled = true
+  }
+}
+
+resource "azurerm_storage_container" "this" {
+  name                  = "tfstate"
+  storage_account_id    = azurerm_storage_account.this.id
+  container_access_type = "private"
+}
+
+resource "azurerm_private_endpoint" "this" {
+  name                = "pe-stlaunchpad"
+  location            = azurerm_resource_group.this.location
+  resource_group_name = azurerm_resource_group.this.name
+  subnet_id           = azurerm_subnet.this.id
+
+  private_service_connection {
+    name                           = "blob"
+    is_manual_connection           = false
+    private_connection_resource_id = azurerm_storage_account.this.id
+    subresource_names              = ["blob"]
+  }
+}
+
+resource "azurerm_role_assignment" "this" {
+  principal_id         = azurerm_user_assigned_identity.this.principal_id
+  scope                = azurerm_storage_account.this.id
+  role_definition_name = "Storage Blob Data Owner"
+}
+
+resource "azurerm_management_lock" "this" {
+  name       = "storage-account-lock"
+  lock_level = "CanNotDelete"
+  scope      = azurerm_storage_account.this.id
+}
+
+resource "azurerm_private_dns_zone" "blob" {
+  name                = "privatelink.blob.core.windows.net"
+  resource_group_name = azurerm_resource_group.this.name
+}
+
+resource "azurerm_private_dns_zone_virtual_network_link" "blob" {
+  name                  = "vnet-link-blob"
+  resource_group_name   = azurerm_resource_group.this.name
+  private_dns_zone_name = azurerm_private_dns_zone.blob.name
+  virtual_network_id    = azurerm_virtual_network.this.id
+  registration_enabled  = false
+}
+
+resource "azurerm_private_dns_a_record" "blob" {
+  name                = azurerm_storage_account.this.blob_primary_endpoint_suffix
+  zone_name           = azurerm_private_dns_zone.blob.name
+  resource_group_name = azurerm_resource_group.this.name
+  ttl                 = 300
+  records             = [azurerm_private_endpoint.this.private_service_connection[0].private_ip_address]
+  depends_on          = [azurerm_private_endpoint.this]
+}
