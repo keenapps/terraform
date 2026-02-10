@@ -2,4 +2,5 @@ provider "azurerm" {
   features {}
   resource_provider_registrations = "none"
   subscription_id                 = var.subscription_id
+  use_oidc                        = true
 }
