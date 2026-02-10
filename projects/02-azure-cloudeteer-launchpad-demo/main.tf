@@ -1,7 +1,5 @@
 data "azurerm_subscription" "current" {}
 
-data "azurerm_client_config" "current" {}
-
 # Resource Block
 resource "azurerm_resource_group" "this" {
   location = "Switzerland North"
@@ -22,11 +20,6 @@ resource "azurerm_subnet" "this" {
   resource_group_name  = azurerm_resource_group.this.name
   virtual_network_name = azurerm_virtual_network.this.name
   address_prefixes     = ["192.168.42.0/28"]
-}
-
-# Managed Identity + Federated Credentials Block
-variable "runner_github_repo" {
-  type = string
 }
 
 resource "azurerm_user_assigned_identity" "this" {
