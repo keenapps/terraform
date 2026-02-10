@@ -36,15 +36,21 @@ jobs:
     - name: Terraform Init
       working-directory: ./projects/02-azure-cloudeteer-launchpad-demo
       env:
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUB_ID }}
+        ARM_USE_OIDC: true
         TF_VAR_runner_github_repo: terraform
         TF_VAR_subscription_id: ${{ secrets.AZURE_SUB_ID }}
+        TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
       run: terraform init
-    
+
     - name: Terraform Plan
       working-directory: ./projects/02-azure-cloudeteer-launchpad-demo
       env:
-        TF_VAR_runner_github_repo: terraform
-        TF_VAR_subscription_id: ${{ secrets.AZURE_SUB_ID }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUB_ID }}
+        ARM_USE_OIDC: true
+        TF_VAR_runner_github_repo
       run: terraform plan
     
     - name: Terraform Apply
