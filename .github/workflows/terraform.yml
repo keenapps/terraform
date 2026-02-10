@@ -20,13 +20,16 @@ jobs:
     environment: 
       name: prod-azure
       url: https://github.com/keenapps/terraform/tree/main/projects/02-azure-cloudeteer-launchpad-demo
-    env:
-      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUB_ID }}
-      ARM_USE_OIDC: true
     steps:
     - uses: actions/checkout@v4
     
+    - name: Azure Login OIDC
+      uses: azure/login@v2
+      with:
+        client-id: ${{ vars.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUB_ID }}
+
     - name: Terraform Setup
       uses: hashicorp/setup-terraform@v3
       with:
