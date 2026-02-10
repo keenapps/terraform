@@ -40,3 +40,6 @@ jobs:
       if: github.ref == 'refs/heads/main'  # Nur main
       working-directory: ./projects/02-azure-cloudeteer-launchpad-demo
       run: terraform apply -auto-approve -var="runner_github_repo=terraform"
+
+env:
+  TF_VAR_subscription_id: ${{ secrets.AZURE_SUB_ID }}  # GitHub Secret
