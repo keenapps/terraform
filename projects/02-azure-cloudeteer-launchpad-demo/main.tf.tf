@@ -1,3 +1,7 @@
+data "azurerm_subscription" "current" {}
+
+data "azurerm_client_config" "current" {}
+
 # Resource Block
 resource "azurerm_resource_group" "this" {
   location = "Switzerland North"
@@ -42,12 +46,8 @@ resource "azurerm_federated_identity_credential" "this" {
   subject             = "repo:keenapps/${var.runner_github_repo}:environment:${each.key}"
 }
 
-variable "management_group_name" {
-  type = string
-}
-
-resource "azurerm_role_assignment" "management_group_owner" {
+resource "azurerm_role_assignment" "subscription_owner" {
   principal_id         = azurerm_user_assigned_identity.this.principal_id
   role_definition_name = "Owner"
-  scope                = var.management_group_name
+  scope                = data.azurerm_subscription.current.id
 }
