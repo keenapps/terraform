@@ -1,19 +1,24 @@
 name: Terraform Deploy
 on:
-  workflow_dispatch:  # Manuell triggern
+  workflow_dispatch:
   push:
     branches: [ main ]
-    paths: ['projects/02-azure-cloudeteer-launchpad-demo/**']
+    paths:       
+      - 'projects/02-azure-cloudeteer-launchpad-demo/**'
+      - '.github/workflows/terraform.yml'
+  pull_request:
+    paths:
+      - 'projects/02-azure-cloudeteer-launchpad-demo/**'
 
 permissions:
-  id-token: write    # OIDC
+  id-token: write 
   contents: read
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: 
-      name: prod-azure  # Matcht Credential
+      name: prod-azure
       url: https://github.com/keenapps/terraform/tree/main/projects/02-azure-cloudeteer-launchpad-demo
     steps:
     - uses: actions/checkout@v4
