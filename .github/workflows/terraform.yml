@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [ main ]
-    paths:       
+    paths:     
       - 'projects/02-azure-cloudeteer-launchpad-demo/**'
       - '.github/workflows/terraform.yml'
   pull_request:
@@ -30,16 +30,32 @@ jobs:
     
     - name: Terraform Init
       working-directory: ./projects/02-azure-cloudeteer-launchpad-demo
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUB_ID }}
+        ARM_USE_OIDC: true
       run: terraform init
     
     - name: Terraform Plan
       working-directory: ./projects/02-azure-cloudeteer-launchpad-demo
-      run: terraform plan -var="runner_github_repo=terraform"
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUB_ID }}
+        ARM_USE_OIDC: true
+        TF_VAR_runner_github_repo: terraform
+        TF_VAR_subscription_id: ${{ secrets.AZURE_SUB_ID }}
+      run: terraform plan
     
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/main'  # Nur main
+      if: github.ref == 'refs/heads/main'
       working-directory: ./projects/02-azure-cloudeteer-launchpad-demo
-      run: terraform apply -auto-approve -var="runner_github_repo=terraform"
-
-env:
-  TF_VAR_subscription_id: ${{ secrets.AZURE_SUB_ID }}  # GitHub Secret
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUB_ID }}
+        ARM_USE_OIDC: true
+        TF_VAR_runner_github_repo: terraform
+        TF_VAR_subscription_id: ${{ secrets.AZURE_SUB_ID }}
+      run: terraform apply -auto-approve
