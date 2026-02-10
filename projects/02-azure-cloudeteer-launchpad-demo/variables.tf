@@ -1,5 +1,5 @@
 variable "runner_github_repo" {
-  type = string
+  type    = string
   default = "terraform"
 }
 
@@ -8,5 +8,5 @@ variable "subscription_id" {
 }
 
 variable "tenant_id" {
-  type = string 
+  type = string
 }

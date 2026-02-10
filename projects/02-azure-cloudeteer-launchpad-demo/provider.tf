@@ -1,5 +1,5 @@
 provider "azurerm" {
   features {}
-  resource_provider_registrations = "none"
-  use_oidc                        = true
+  use_oidc            = true
+  storage_use_azuread = true
 }
