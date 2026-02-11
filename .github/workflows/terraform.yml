@@ -26,7 +26,6 @@ jobs:
       - name: Azure OIDC Login
         uses: azure/login@v2
         with:
-          client-id: ""
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUB_ID }}
 
