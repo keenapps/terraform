@@ -4,5 +4,4 @@ provider "azurerm" {
   tenant_id                  = var.tenant_id
   use_oidc                   = true
   storage_use_azuread        = true
-  skip_provider_registration = true
 }
