@@ -63,7 +63,7 @@ resource "azurerm_storage_account" "this" {
   allow_nested_items_to_be_public   = false
   default_to_oauth_authentication   = true
   infrastructure_encryption_enabled = true
-  public_network_access_enabled     = false
+  public_network_access_enabled     = true
   shared_access_key_enabled         = false
 
   blob_properties {
@@ -78,33 +78,18 @@ resource "azurerm_storage_container" "this" {
   container_access_type = "private"
 }
 
-# Private Endpoint
-resource "azurerm_private_endpoint" "this" {
-  name                = "pe-stlaunchpad"
-  location            = azurerm_resource_group.this.location
-  resource_group_name = azurerm_resource_group.this.name
-  subnet_id           = azurerm_subnet.this.id
-
-  private_service_connection {
-    name                           = "blob"
-    is_manual_connection           = false
-    private_connection_resource_id = azurerm_storage_account.this.id
-    subresource_names              = ["blob"]
-  }
-}
-
 resource "azurerm_role_assignment" "this" {
   principal_id         = azurerm_user_assigned_identity.this.principal_id
   scope                = azurerm_storage_account.this.id
   role_definition_name = "Storage Blob Data Owner"
 }
 
-# Resource lock
+/* # Resource lock
 resource "azurerm_management_lock" "this" {
   name       = "storage-account-lock"
   lock_level = "CanNotDelete"
   scope      = azurerm_storage_account.this.id
-}
+} */
 
 # DNS Zone
 resource "azurerm_private_dns_zone" "blob" {
@@ -118,15 +103,6 @@ resource "azurerm_private_dns_zone_virtual_network_link" "blob" {
   private_dns_zone_name = azurerm_private_dns_zone.blob.name
   virtual_network_id    = azurerm_virtual_network.this.id
   registration_enabled  = false
-}
-
-resource "azurerm_private_dns_a_record" "blob" {
-  name                = azurerm_storage_account.this.name
-  zone_name           = azurerm_private_dns_zone.blob.name
-  resource_group_name = azurerm_resource_group.this.name
-  ttl                 = 300
-  records             = [azurerm_private_endpoint.this.private_service_connection[0].private_ip_address]
-  depends_on          = [azurerm_private_endpoint.this]
 }
 
 # Outputs
