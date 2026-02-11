@@ -44,6 +44,7 @@ The backend still defaulted to key-based auth.
 use_azuread_auth = true
 ```
 was missing in the backend block.
+
 Result: 403 KeyBasedAuthenticationNotPermitted
 
 # Second Problem: Data Plane RBAC
@@ -64,6 +65,7 @@ to the executing identity (local user during bootstrap).
 After RBAC propagation → migration succeeded.
 
 # Final Working Backend Configuration
+```bash
 terraform {
   backend "azurerm" {
     resource_group_name  = "rg-launchpad"
@@ -74,6 +76,7 @@ terraform {
     use_azuread_auth     = true
   }
 }
+```
 
 # GitHub OIDC Configuration
 
