@@ -51,6 +51,7 @@ resource "random_string" "this" {
   upper   = false
 }
 
+# Storage Account
 resource "azurerm_storage_account" "this" {
   name                = "stlaunchpad${random_string.this.result}"
   location            = azurerm_resource_group.this.location
@@ -70,12 +71,14 @@ resource "azurerm_storage_account" "this" {
   }
 }
 
+# Storage Container
 resource "azurerm_storage_container" "this" {
   name                  = "tfstate"
   storage_account_id    = azurerm_storage_account.this.id
   container_access_type = "private"
 }
 
+# Private Endpoint
 resource "azurerm_private_endpoint" "this" {
   name                = "pe-stlaunchpad"
   location            = azurerm_resource_group.this.location
@@ -96,12 +99,14 @@ resource "azurerm_role_assignment" "this" {
   role_definition_name = "Storage Blob Data Owner"
 }
 
+# Resource lock
 resource "azurerm_management_lock" "this" {
   name       = "storage-account-lock"
   lock_level = "CanNotDelete"
   scope      = azurerm_storage_account.this.id
 }
 
+# DNS Zone
 resource "azurerm_private_dns_zone" "blob" {
   name                = "privatelink.blob.core.windows.net"
   resource_group_name = azurerm_resource_group.this.name
@@ -116,10 +121,24 @@ resource "azurerm_private_dns_zone_virtual_network_link" "blob" {
 }
 
 resource "azurerm_private_dns_a_record" "blob" {
-  name                = azurerm_storage_account.this.blob_primary_endpoint_suffix
+  name                = azurerm_storage_account.this.name
   zone_name           = azurerm_private_dns_zone.blob.name
   resource_group_name = azurerm_resource_group.this.name
   ttl                 = 300
   records             = [azurerm_private_endpoint.this.private_service_connection[0].private_ip_address]
   depends_on          = [azurerm_private_endpoint.this]
+}
+
+# Outputs
+
+output "resource_group_name" {
+  value = azurerm_resource_group.this.name
+}
+
+output "storage_account_name" {
+  value = azurerm_storage_account.this.name
+}
+
+output "container_name" {
+  value = azurerm_storage_container.this.name
 }
