@@ -12,21 +12,17 @@ This repository contains **Infrastructure as Code (IaC) examples** built with Te
 
 Modular setups demonstrate provider authentication, networking, compute, and CI/CD. Learning modules build sequentially (see READMEs), production modules are generalized and reusable.
 
->Repository Structure Note
->
->/modules/... contains individual reusable provider or service modules.
->
->/learning/modules/... Each provider (e.g., AWS, Azure, GitHub, etc.) has its own sub-README with setup and authentication details.
->
->/project/... Complete demos with deployment guides
->
->Some module folders include documentation-only READMEs (architecture notes, explanations).
->
->The actual Terraform logic resides in .tf files (main.tf, variables.tf, outputs.tf, providers.tf, etc.).
->
->Learning Project Disclaimer
->This repository is designed for educational purposes. Some examples use simplified access permissions or mock configurations.
->Do not copy these directly to production environments without proper review of IAM policies, networking rules, and state management.
+**Repository Structure Note**
+
+- /modules/... contains individual reusable provider or service modules.
+- /learning/modules/... Each provider (e.g., AWS, Azure, GitHub, etc.) has its own sub-README with setup and authentication details.
+- /project/... Complete demos with deployment guides
+- some module folders include documentation-only READMEs (architecture notes, explanations).
+- The actual Terraform logic resides in .tf files (main.tf, variables.tf, outputs.tf, providers.tf, etc.).
+  
+**Learning Project Disclaimer**
+This repository is designed for educational purposes. Some examples use simplified access permissions or mock configurations.
+Do not copy these directly to production environments without proper review of IAM policies, networking rules, and state management.
 
 ## Common Use Cases include:
 
@@ -104,3 +100,4 @@ This repository is designed for educational purposes. Some examples use simplifi
 ## License
 
 This repository is open-source and available under the MIT License
+
