@@ -1,4 +1,4 @@
-# Secure Azure Terraform Remote State Backend - Work in Progress
+# Secure Azure Terraform Remote State Backend
 OIDC + Azure AD Auth + Data Plane RBAC Deep Dive
 
 Production-grade Terraform remote state backend on Azure using:
