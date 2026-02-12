@@ -151,21 +151,70 @@ terraform init -migrate-state
 ```
 After confirmation, state is stored in Blob.
 
+**Phase 3 – Network Hardening (Planned Extension)**
 
+The primary objective of this project was:
+- Understanding Azure AD authentication flows
+- Implementing GitHub OIDC with Workload Identity Federation
+- Separating Control Plane and Data Plane RBAC
+- Designing a secure remote backend without access keys
+Private Endpoint-based network isolation was evaluated but intentionally postponed.
 
-**Phase 3 – Network Hardening (Planned)**
+Reason:
+- The architectural complexity (DNS resolution, runner placement, VNet integration) exceeds the learning objective of this proof of concept.
+- The focus was identity-driven security, not network isolation.
+- A Private Endpoint + VNet-integrated runner setup is considered a future extension.
 
-Current Security Model
+Current Security Model:
 - Azure AD authentication only
 - Access keys disabled
 - Data Plane RBAC enforced
 - Public network access enabled (for bootstrap & CI simplicity)
 
-Planned Hardening Steps
+Planned Hardening Steps:
 - Remove unnecessary Data Plane role assignments
 - Restrict network access (Private Endpoint)
 - Disable public network access
 - Operate exclusively via CI OIDC identity
+
+**Phase 4 - Rollback** 
+
+Reverting Backend to Local State
+To migrate state back from remote Azure Blob to local for cleanup/destroy:
+
+Step 1: Comment Backend Block
+```bash
+# terraform {
+#   backend "azurerm" {
+#     resource_group_name  = "rg-launchpad"
+#     storage_account_name = "stlaunchpad8uf"
+#     container_name       = "tfstate"
+#     key                  = "launchpad.tfstate"
+#   }
+# }
+
+```
+Step 2: Reconfigure Backend
+```bash
+terraform init -migrate-state
+```
+Terraform detects backend change (azurerm → local) and prompts for confirmation. State is now local (terraform.tfstate).
+
+Step 3: Verify
+```bash
+terraform state list
+```
+Cleanup & Destroy
+```bash
+terraform destroy -auto-approve
+```
+Deletes all resources (RG, UAMI, Storage, VNet, DNS). Requires Azure CLI Owner rights (Control Plane).
+
+Post-Destroy Cleanup (Recommended)
+- Delete UAMI id-launchpad (Portal)
+- Remove GitHub Environment secrets (AZURE_CLIENT_ID, etc.)
+- Clear role assignments (IAM)
+
 
 # Key Technical Takeaways
 
