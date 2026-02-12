@@ -120,10 +120,10 @@ Authenticating using the Azure CLI is only supported as a User
 
 # Bootstrap Strategy (Reproducible)
 
-Phase 1 – Local Bootstrap
+**Phase 1 – Local Bootstrap**
 Requirements:
 - Azure CLI login (user context)
-- public_network_access_enabled = true temporarily
+- public_network_access_enabled = true (temporary)
 - Storage Blob Data Owner assigned to local user
 
 Commands:
@@ -132,22 +132,40 @@ terraform init
 terraform apply
 ```
 
-Phase 2 – Backend Migration
+**Phase 2 – Backend Migration**
 
 Add backend block and run:
+```bash
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "rg-launchpad"
+    storage_account_name = "stlaunchpadxxx"
+    container_name       = "tfstate"
+    key                  = "launchpad.tfstate"
+    use_azuread_auth     = true
+  }
+}
+```
 ```bash
 terraform init -migrate-state
 ```
 After confirmation, state is stored in Blob.
 
-Phase 3 – Hardening
 
-After migration:
 
-- Remove unnecessary Data Plane roles
-- Restrict network access
-- Keep access key authentication disabled
-- Enable CI-only OIDC deployments
+**Phase 3 – Network Hardening (Planned)**
+
+Current Security Model
+- Azure AD authentication only
+- Access keys disabled
+- Data Plane RBAC enforced
+- Public network access enabled (for bootstrap & CI simplicity)
+
+Planned Hardening Steps
+- Remove unnecessary Data Plane role assignments
+- Restrict network access (Private Endpoint)
+- Disable public network access
+- Operate exclusively via CI OIDC identity
 
 # Key Technical Takeaways
 
@@ -167,3 +185,15 @@ After migration:
 - Production-ready remote state without access keys
 - Clean bootstrap-to-harden architecture
 - Root Cause Analysis driven debugging (including iterative trial-and-error where required)
+
+# Proof of Concept:
+
+The screenshots below confirm the secure backend deployment, successful state migration and github workflow:
+Deployed resources (control plane)
+![Storage deployed](./img/poc1.jpg)
+
+State stored in Azure Blob (data plane)
+![Terraform state](./img/poc2.jpg)
+
+CI pipeline authenticated via OIDC
+![GitHub Workflow](./img/poc3.jpg)
