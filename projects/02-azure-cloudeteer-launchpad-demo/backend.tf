@@ -1,6 +1,6 @@
 # Block comment file before 1st terraform init /apply
 # Change storage_account_name after 1st apply to actual string
-terraform {
+/* terraform {
   backend "azurerm" {
     resource_group_name  = "rg-launchpad"
     storage_account_name = "stlaunchpadebv"  #change to actual storage account"
@@ -8,4 +8,4 @@ terraform {
     key                  = "launchpad.tfstate"
     use_azuread_auth     = true
   }
-}
+} */
