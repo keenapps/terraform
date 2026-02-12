@@ -1,15 +1,15 @@
-name: Terraform Deploy - Cloudeteer Launchpad Demo
+name: Terraform Deploy - Secure Backend OIDC Demo
 on:
   workflow_dispatch:
   push:
     branches: [ main ]
     paths:
-      - 'projects/02-azure-cloudeteer-launchpad-demo/**'
+      - 'projects/02-azure-secure-backend-with-OIDC-demo/**'
       - '.github/workflows/terraform.yml'
   pull_request:
     types: [ opened, synchronize ]
     paths:
-      - 'projects/02-azure-cloudeteer-launchpad-demo/**'
+      - 'projects/02-azure-secure-backend-with-OIDC-demo/**'
 
 permissions:
   id-token: write
@@ -37,7 +37,7 @@ jobs:
           terraform_version: 1.9.0
 
       - name: Terraform Init
-        working-directory: ./projects/02-azure-cloudeteer-launchpad-demo
+        working-directory: ./projects/02-azure-secure-backend-with-OIDC-demo
         env:
           TF_VAR_runner_github_repo: terraform
           TF_VAR_subscription_id: ${{ secrets.AZURE_SUB_ID }}
@@ -49,7 +49,7 @@ jobs:
         run: terraform init -migrate-state
 
       - name: Terraform Plan
-        working-directory: ./projects/02-azure-cloudeteer-launchpad-demo
+        working-directory: ./projects/02-azure-secure-backend-with-OIDC-demo
         env:
           TF_VAR_runner_github_repo: terraform
           TF_VAR_subscription_id: ${{ secrets.AZURE_SUB_ID }}
@@ -62,7 +62,7 @@ jobs:
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
-        working-directory: ./projects/02-azure-cloudeteer-launchpad-demo
+        working-directory: ./projects/02-azure-secure-backend-with-OIDC-demo
         env:
           TF_VAR_runner_github_repo: terraform
           TF_VAR_subscription_id: ${{ secrets.AZURE_SUB_ID }}
