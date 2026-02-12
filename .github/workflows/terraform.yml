@@ -29,7 +29,6 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUB_ID }}
-          auth-type: workload_identity
 
 
       - name: Terraform Setup
