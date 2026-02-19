@@ -1,0 +1,23 @@
+name: Terraform AWS Hybrid
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  test-aws-oidc:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::134071079482:role/github-terraform-aws-hybrid
+          aws-region: eu-central-1
+
+      - name: Validate identity
+        run: aws sts get-caller-identity
