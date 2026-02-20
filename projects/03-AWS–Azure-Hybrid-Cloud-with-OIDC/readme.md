@@ -90,8 +90,9 @@ IAM is API-driven. Each individual API action must be explicitly permitted.
 
 ---
 
-# Issue 4 – OIDC Provider Already Exists
-Error
+# Issue 2 – OIDC Provider Already Exists
+
+Error: 
 
 EntityAlreadyExists: Provider with url https://token.actions.githubusercontent.com already exists
 
@@ -109,7 +110,7 @@ OR
 Treat OIDC provider as bootstrap infrastructure (created once per account)
 
 **Final approach:**
-OIDC provider treated as foundational IAM resource.
+OIDC provider treated as foundational IAM resource. Got imported in terraform state
 
 ---
 
