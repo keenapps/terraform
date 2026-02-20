@@ -105,8 +105,6 @@ resource "azurerm_private_dns_zone_virtual_network_link" "blob" {
   registration_enabled  = false
 }
 
-# EC2 Instance
-
 # RG for Compute
 resource "azurerm_resource_group" "compute" {
   name     = "rg-hybrid-compute"
@@ -115,59 +113,59 @@ resource "azurerm_resource_group" "compute" {
 
 # Virtual Network (VNet)
 resource "azurerm_virtual_network" "compute" {
-  name                = "terraform-network"                            
-  address_space       = ["10.0.0.0/16"]                                
-  location            = azurerm_resource_group.compute.location 
-  resource_group_name = azurerm_resource_group.compute.name    
+  name                = "terraform-network"
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.compute.location
+  resource_group_name = azurerm_resource_group.compute.name
 }
 
 # Subnet - Network Segment Inside the VNet
 resource "azurerm_subnet" "compute_subnet" {
-  name                 = "compute_subnet"                                 
-  resource_group_name  = azurerm_resource_group.compute.name 
-  virtual_network_name = azurerm_virtual_network.compute.name 
-  address_prefixes     = ["10.0.2.0/24"]                            
+  name                 = "compute_subnet"
+  resource_group_name  = azurerm_resource_group.compute.name
+  virtual_network_name = azurerm_virtual_network.compute.name
+  address_prefixes     = ["10.0.2.0/24"]
 
   depends_on = [azurerm_virtual_network.compute]
 }
 
 # Network Interface (NIC) - VM Network Adapter
 resource "azurerm_network_interface" "compute-nic" {
-  name                = "compute-nic"                                
-  location            = azurerm_resource_group.compute.location 
-  resource_group_name = azurerm_resource_group.compute.name     
+  name                = "compute-nic"
+  location            = azurerm_resource_group.compute.location
+  resource_group_name = azurerm_resource_group.compute.name
 
   ip_configuration {
-    name                          = "internal"                
-    subnet_id                     = azurerm_subnet.compute_subnet.id 
-    private_ip_address_allocation = "Dynamic"                 
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.compute_subnet.id
+    private_ip_address_allocation = "Dynamic"
   }
 }
 
 # Linux Virtual Machine - Compute Instance
 resource "azurerm_linux_virtual_machine" "compute_vm" {
-  name                = "ec2-machine"                              
-  resource_group_name = azurerm_resource_group.compute.name     
-  location            = azurerm_resource_group.compute.location 
-  size                = "Standard_D2s_v3"                              
+  name                = "ec2-machine"
+  resource_group_name = azurerm_resource_group.compute.name
+  location            = azurerm_resource_group.compute.location
+  size                = "Standard_D2s_v3"
 
-  admin_username                  = "adminuser" 
-  disable_password_authentication = true        
+  admin_username                  = "adminuser"
+  disable_password_authentication = true
 
   network_interface_ids = [
-    azurerm_network_interface.compute-nic.id, 
+    azurerm_network_interface.compute-nic.id,
   ]
 
   os_disk {
-    caching              = "ReadWrite"    
-    storage_account_type = "Standard_LRS" 
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
   }
 
   source_image_reference {
-    publisher = "Canonical"        
-    offer     = "ubuntu-24_04-lts" 
-    sku       = "server"           
-    version   = "latest"           
+    publisher = "Canonical"
+    offer     = "ubuntu-24_04-lts"
+    sku       = "server"
+    version   = "latest"
   }
 }
 

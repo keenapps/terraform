@@ -3,7 +3,7 @@
 terraform {
   backend "azurerm" {
     resource_group_name  = "rg-launchpad"
-    storage_account_name = "stlaunchpad5id"  #change to actual storage account"
+    storage_account_name = "stlaunchpad5id" #change to actual storage account"
     container_name       = "tfstate"
     key                  = "launchpad.tfstate"
     use_azuread_auth     = true
