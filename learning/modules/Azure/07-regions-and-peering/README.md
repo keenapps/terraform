@@ -18,9 +18,8 @@ Enterprise hub-spoke topology across France (hub ↔ Switzerland/Spain spokes). 
 
 ---
 ​
-## Modular Structure (10+ files)
+## Modular Structure (7 files)
 - provider.tf: azurerm/random/local/tls
-- variables.tf: Multi-region config (CH/FR/SP subnets)
 - main.tf: RGs → VNets → Subnets → Public IPs
 - networking.tf: Hub-spoke peering + NSGs
 - compute.tf: 4x NICs → 4x Windows VMs
